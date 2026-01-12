@@ -36,7 +36,7 @@
     <div id="start-menu">
         <div class="author-tag">Pham Hien PRESENTS</div>
         <h1>OS EXAM MASTER</h1>
-        <p style="color: #64748b; margin-bottom: 30px;">Toàn bộ câu hỏi ôn thi (Sync, Deadlock, Memory, VM, CPU, Disk).<br>(Answer: English)</p>
+        <p style="color: #64748b; margin-bottom: 30px;">Hệ thống câu hỏi ôn thi (Toàn bộ 68 câu).<br>(Answer: English)</p>
         <button class="btn-main" onclick="startQuiz()">BẮT ĐẦU ÔN THI</button>
     </div>
 
@@ -60,7 +60,6 @@
 
 <script>
     const masterData = [
-        // --- 52 CÂU HỎI GỐC CỦA BẠN (GIỮ NGUYÊN) ---
         { q: "Tình huống nhiều tiến trình cùng truy cập và thay đổi dữ liệu chung, kết quả phụ thuộc vào thứ tự thực thi gọi là ____ condition.", a: "race", hint: "Điều kiện chạy đua." },
         { q: "Đoạn mã trong tiến trình có truy cập đến tài nguyên chung được gọi là ____ section.", a: "critical", hint: "Vùng găng / Vùng tranh chấp." },
         { q: "Yêu cầu đảm bảo chỉ một tiến trình được ở trong vùng tranh chấp tại một thời điểm là ____ exclusion.", a: "mutual", hint: "Loại trừ tương hỗ." },
@@ -122,13 +121,10 @@
         { q: "Phương pháp cấp phát frame chỉ cho phép tiến trình thay thế các trang của chính nó là ____ allocation.", a: "local", hint: "Cấp phát cục bộ." },
         { q: "Nguyên nhân chính dẫn đến Thrashing là do mức độ đa chương (degree of multiprogramming) quá ____.", a: "high", hint: "Cao." },
         { q: "Hàm hệ thống trong Unix/Linux tạo ra tiến trình con sử dụng kỹ thuật Copy-on-Write là ______().", a: "fork", hint: "Lệnh tạo tiến trình con." },
-
-        // --- CÁC CÂU HỎI BỔ SUNG QUAN TRỌNG ĐỂ ĐI THI ---
         { q: "Thuật toán lập lịch CPU đơn giản nhất, tiến trình nào đến trước được phục vụ trước là ____.", a: "fcfs", hint: "First-Come, First-Served." },
         { q: "Thuật toán lập lịch CPU ưu tiên tiến trình có thời gian thực thi ngắn nhất là ____.", a: "sjf", hint: "Shortest Job First." },
-        { q: "Thuật toán lập lịch CPU thiết kế cho hệ thống chia sẻ thời gian, mỗi tiến trình nhận một lát cắt thời gian gọi là Round ____.", a: "robin", hint: "Lập lịch vòng tròn." },
+        { q: "Thuật toán lập lịch CPU mỗi tiến trình nhận một lát cắt thời gian gọi là Round ____.", a: "robin", hint: "Lập lịch vòng tròn." },
         { q: "Khoảng thời gian một tiến trình nhận được để thực thi trong Round Robin gọi là time ____.", a: "quantum", hint: "Lát cắt thời gian." },
-        { q: "Thuật toán lập lịch đĩa (Disk Scheduling) phục vụ các yêu cầu theo thứ tự đến là ____.", a: "fcfs", hint: "Giống lập lịch CPU." },
         { q: "Thuật toán lập lịch đĩa di chuyển đầu đọc từ đầu đến cuối đĩa rồi quay lại như một thang máy gọi là ____.", a: "scan", hint: "Thuật toán thang máy." },
         { q: "Cấu trúc dữ liệu của hệ điều hành dùng để quản lý thông tin của một tiến trình là ____.", a: "pcb", hint: "Process Control Block." },
         { q: "Việc chuyển đổi CPU từ tiến trình này sang tiến trình khác gọi là ____ switch.", a: "context", hint: "Chuyển đổi ngữ cảnh." }
@@ -206,7 +202,7 @@
             <div style="text-align: center; padding: 20px;">
                 <h2>KẾT THÚC ÔN TẬP!</h2>
                 <div style="font-size: 3.5rem; color: var(--primary); font-weight: 800; margin: 20px 0;">${currentScore}/${quizData.length}</div>
-                <p>Bạn đã sẵn sàng cho kỳ thi OS.</p>
+                <p>Bạn đã hoàn thành bộ đề ôn thi OS.</p>
                 <button class="btn-main" onclick="location.reload()">LÀM LẠI</button>
             </div>`;
         confetti({ particleCount: 200, spread: 100, origin: { y: 0.5 } });
