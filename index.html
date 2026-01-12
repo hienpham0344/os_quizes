@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Quiz Pro - By PhamHien</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --primary: #2563eb; --secondary: #64748b; --success: #10b981; --error: #ef4444; --dark: #0f172a; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--dark); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow: hidden; }
+        .card { background: #ffffff; color: #1e293b; padding: 2.5rem; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); width: 100%; max-width: 650px; min-height: 480px; display: flex; flex-direction: column; position: relative; z-index: 10; }
+        
+        #start-menu { text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; }
+        .author-tag { color: var(--primary); font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; }
+        h1 { font-size: 2.5rem; margin: 0 0 20px 0; color: #0f172a; }
+        
+        #quiz-content { display: none; }
+        .progress-container { height: 6px; background: #e2e8f0; border-radius: 3px; margin-bottom: 25px; }
+        .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+        .q-text { font-size: 1.25rem; font-weight: 600; line-height: 1.6; margin-bottom: 20px; color: #334155; height: 80px; }
+        .blank-space { color: var(--primary); border-bottom: 2px solid var(--primary); padding: 0 10px; font-weight: 800; }
+        
+        input[type="text"] { width: 100%; padding: 16px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 1.1rem; margin-bottom: 15px; transition: all 0.2s; box-sizing: border-box; }
+        input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        button { padding: 14px 28px; border: none; border-radius: 12px; cursor: pointer; font-size: 1rem; font-weight: 700; transition: 0.2s; }
+        .btn-main { background: var(--primary); color: white; flex: 2; }
+        .btn-skip { background: #f1f5f9; color: var(--secondary); flex: 1; }
+        .btn-next { background: var(--dark); color: white; width: 100%; display: none; }
+        button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+        .feedback { padding: 15px; border-radius: 10px; margin-top: 15px; font-weight: 600; display: none; }
+        .correct { background: #dcfce7; color: #166534; }
+        .wrong { background: #fee2e2; color: #991b1b; }
+        .made-by { text-align: center; margin-top: auto; font-size: 0.8rem; color: #94a3b8; padding-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div id="start-menu">
+        <div class="author-tag">Pham Hien PRESENTS</div>
+        <h1>OS QUIZ: MEMORY</h1>
+        <p style="color: #64748b; margin-bottom: 30px;">Hệ thống câu hỏi ngẫu nhiên.<br>(Question: Vietnamese | Answer: English)</p>
+        <button class="btn-main" onclick="startQuiz()">BẮT ĐẦU ÔN TẬP</button>
+    </div>
+
+    <div id="quiz-content">
+        <div class="progress-container"><div class="progress-fill" id="p-fill"></div></div>
+        <div id="status" style="display:flex; justify-content: space-between; font-size: 0.85rem; color: #64748b; margin-bottom: 10px;">
+            <span id="q-number">Câu hỏi 1/20</span>
+            <span id="score">Điểm: 0</span>
+        </div>
+        
+        <div class="q-text" id="q-text">Đang tải câu hỏi...</div>
+        <input type="text" id="user-input" placeholder="Nhập đáp án tiếng Anh..." autocomplete="off">
+        
+        <div id="feedback" class="feedback"></div>
+        
+        <div class="btn-group" id="action-buttons">
+            <button class="btn-main" id="btn-check" onclick="checkAnswer()">KIỂM TRA (Enter)</button>
+            <button class="btn-skip" id="btn-skip" onclick="skipQuestion()">BỎ QUA</button>
+        </div>
+        <button class="btn-next" id="btn-next" onclick="nextQuestion()">CÂU TIẾP THEO →</button>
+    </div>
+
+    <div class="made-by">Made by PhamHien</div>
+</div>
+
+<script>
+    const masterData = [
+        { q: "Địa chỉ do CPU tạo ra được gọi là ________ address.", a: "logical", hint: "Ngược lại với physical." },
+        { q: "Thiết bị phần cứng thực hiện ánh xạ địa chỉ logic sang vật lý là ________.", a: "mmu", hint: "Viết tắt của Memory Management Unit." },
+        { q: "Địa chỉ vật lý = Địa chỉ logic + ________ Register.", a: "relocation", hint: "Thanh ghi dùng để tái định vị." },
+        { q: "Hiện tượng tổng bộ nhớ đủ nhưng không liên tục gọi là ________ fragmentation.", a: "external", hint: "Phân mảnh bên ngoài." },
+        { q: "Cơ chế quản lý bộ nhớ chia RAM thành các khối kích thước cố định là ________.", a: "paging", hint: "Kỹ thuật phân trang." },
+        { q: "Các khối kích thước cố định trong bộ nhớ vật lý (RAM) gọi là ________.", a: "frames", hint: "Khung trang." },
+        { q: "Các khối cùng kích thước trong bộ nhớ logic gọi là ________.", a: "pages", hint: "Các trang." },
+        { q: "Địa chỉ logic gồm: Page number (p) và Page ________ (d).", a: "offset", hint: "Độ dời." },
+        { q: "Bộ nhớ đệm phần cứng giúp tra cứu bảng trang nhanh hơn là ________.", a: "tlb", hint: "Translation Lookaside Buffer." },
+        { q: "Bộ nhớ dư thừa bên trong một frame đã cấp phát gọi là ________ fragmentation.", a: "internal", hint: "Phân mảnh nội vi." },
+        { q: "Cách chia bộ nhớ dựa trên góc nhìn của lập trình viên là ________.", a: "segmentation", hint: "Phân đoạn." },
+        { q: "Trong bảng phân đoạn, mỗi dòng chứa Base và ________.", a: "limit", hint: "Giới hạn." },
+        { q: "Cơ chế cho phép chạy ứng dụng lớn hơn dung lượng RAM thật là ________ memory.", a: "virtual", hint: "Bộ nhớ ảo." },
+        { q: "Kỹ thuật chỉ nạp trang vào RAM khi thực sự cần là ________ paging.", a: "demand", hint: "Nạp theo yêu cầu." },
+        { q: "Lỗi xảy ra khi truy cập vào trang chưa có trong RAM là Page ________.", a: "fault", hint: "Lỗi trang." },
+        { q: "Thuật toán thay thế trang tối ưu nhất (lý thuyết) là ________.", a: "optimal", hint: "Viết tắt là OPT." },
+        { q: "Thuật toán thay thế trang dựa trên lịch sử sử dụng gần nhất là ________.", a: "lru", hint: "Least Recently Used." },
+        { q: "Nghịch lý khi tăng số frame nhưng lỗi trang lại tăng là ________'s Anomaly.", a: "belady", hint: "Bắt đầu bằng chữ B." },
+        { q: "Hiện tượng hệ thống bận swap trang liên tục khiến CPU rảnh là ________.", a: "thrashing", hint: "Trì trệ hệ thống." },
+        { q: "Mô hình ngăn chặn Thrashing dựa trên tính cục bộ là ________-set model.", a: "working", hint: "Tập làm việc." }
+    ];
+
+    let quizData = [];
+    let currentIdx = 0;
+    let currentScore = 0;
+
+    function celebrate() {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#2563eb', '#10b981', '#ffbb33']
+        });
+    }
+
+    function startQuiz() {
+        // Randomize questions
+        quizData = [...masterData].sort(() => Math.random() - 0.5);
+        currentIdx = 0;
+        currentScore = 0;
+        document.getElementById('score').innerText = `Điểm: 0`;
+        document.getElementById('start-menu').style.display = 'none';
+        document.getElementById('quiz-content').style.display = 'block';
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const data = quizData[currentIdx];
+        document.getElementById('q-text').innerHTML = data.q.replace("________", "<span class='blank-space'>...</span>");
+        document.getElementById('user-input').value = "";
+        document.getElementById('user-input').disabled = false;
+        document.getElementById('feedback').style.display = 'none';
+        document.getElementById('btn-next').style.display = 'none';
+        document.getElementById('action-buttons').style.display = 'flex';
+        document.getElementById('q-number').innerText = `Câu hỏi ${currentIdx + 1}/${quizData.length}`;
+        document.getElementById('p-fill').style.width = `${((currentIdx + 1) / quizData.length) * 100}%`;
+        setTimeout(() => document.getElementById('user-input').focus(), 10);
+    }
+
+    function checkAnswer() {
+        const userValue = document.getElementById('user-input').value.trim().toLowerCase();
+        const correctAnswer = quizData[currentIdx].a.toLowerCase();
+        const feedback = document.getElementById('feedback');
+        
+        if (userValue === "") return;
+
+        if (userValue === correctAnswer) {
+            feedback.innerText = "Chính xác! 🎉";
+            feedback.className = "feedback correct";
+            currentScore += 5;
+            document.getElementById('score').innerText = `Điểm: ${currentScore}`;
+            celebrate(); // Hiệu ứng pháo hoa
+            showNextState();
+        } else {
+            feedback.innerText = "Sai rồi! Gợi ý: " + quizData[currentIdx].hint;
+            feedback.className = "feedback wrong";
+        }
+        feedback.style.display = 'block';
+    }
+
+    function skipQuestion() {
+        const feedback = document.getElementById('feedback');
+        feedback.innerText = "Đã bỏ qua. Đáp án đúng là: " + quizData[currentIdx].a.toUpperCase();
+        feedback.className = "feedback";
+        feedback.style.background = "#f1f5f9";
+        feedback.style.color = "#475569";
+        feedback.style.display = 'block';
+        showNextState();
+    }
+
+    function showNextState() {
+        document.getElementById('user-input').disabled = true;
+        document.getElementById('action-buttons').style.display = 'none';
+        document.getElementById('btn-next').style.display = 'block';
+        document.getElementById('btn-next').focus();
+    }
+
+    function nextQuestion() {
+        currentIdx++;
+        if (currentIdx < quizData.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        const content = document.getElementById('quiz-content');
+        content.innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+                <h2 style="font-size: 2rem; color: #0f172a;">KẾT THÚC!</h2>
+                <div style="font-size: 3rem; font-weight: 800; color: var(--primary); margin: 20px 0;">${currentScore}/100</div>
+                <p style="color: #64748b; margin-bottom: 25px;">Tuyệt vời! Bạn đã hoàn thành bộ câu hỏi.</p>
+                <button class="btn-main" onclick="location.reload()">LÀM LẠI (TRỘN CÂU HỎI)</button>
+            </div>
+        `;
+        // Pháo hoa lớn khi kết thúc
+        var duration = 3 * 1000;
+        var end = Date.now() + duration;
+        (function frame() {
+            confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+            confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+            if (Date.now() < end) { requestAnimationFrame(frame); }
+        }());
+    }
+
+    document.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            const isCheckVisible = document.getElementById('action-buttons').style.display !== 'none';
+            const isStartVisible = document.getElementById('start-menu').style.display !== 'none';
+            if (isStartVisible) startQuiz();
+            else if (isCheckVisible) checkAnswer();
+            else nextQuestion();
+        }
+    });
+</script>
+</body>
+</html>
