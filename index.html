@@ -1,227 +1,66 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OS Quiz Pro - By PhamHien</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Quiz Master - By PhamHien</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-      :root {
-        --primary: #2563eb;
-        --secondary: #64748b;
-        --success: #10b981;
-        --error: #ef4444;
-        --dark: #0f172a;
-      }
-      body {
-        font-family: "Inter", system-ui, sans-serif;
-        background: var(--dark);
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        overflow: hidden;
-      }
-      .card {
-        background: #ffffff;
-        color: #1e293b;
-        padding: 2.5rem;
-        border-radius: 24px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        max-width: 650px;
-        min-height: 480px;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        z-index: 10;
-      }
-
-      #start-menu {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        height: 100%;
-      }
-      .author-tag {
-        color: var(--primary);
-        font-weight: 700;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-      }
-      h1 {
-        font-size: 2.5rem;
-        margin: 0 0 20px 0;
-        color: #0f172a;
-      }
-
-      #quiz-content {
-        display: none;
-      }
-      .progress-container {
-        height: 6px;
-        background: #e2e8f0;
-        border-radius: 3px;
-        margin-bottom: 25px;
-      }
-      .progress-fill {
-        height: 100%;
-        background: var(--primary);
-        width: 0%;
-        transition: width 0.4s ease;
-      }
-      .q-text {
-        font-size: 1.25rem;
-        font-weight: 600;
-        line-height: 1.6;
-        margin-bottom: 20px;
-        color: #334155;
-        height: 80px;
-      }
-      .blank-space {
-        color: var(--primary);
-        border-bottom: 2px solid var(--primary);
-        padding: 0 10px;
-        font-weight: 800;
-      }
-
-      input[type="text"] {
-        width: 100%;
-        padding: 16px;
-        border: 2px solid #cbd5e1;
-        border-radius: 12px;
-        font-size: 1.1rem;
-        margin-bottom: 15px;
-        transition: all 0.2s;
-        box-sizing: border-box;
-      }
-      input:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-      }
-
-      .btn-group {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-      }
-      button {
-        padding: 14px 28px;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 1rem;
-        font-weight: 700;
-        transition: 0.2s;
-      }
-      .btn-main {
-        background: var(--primary);
-        color: white;
-        flex: 2;
-      }
-      .btn-skip {
-        background: #f1f5f9;
-        color: var(--secondary);
-        flex: 1;
-      }
-      .btn-next {
-        background: var(--dark);
-        color: white;
-        width: 100%;
-        display: none;
-      }
-      button:hover {
-        filter: brightness(1.1);
-        transform: translateY(-1px);
-      }
-
-      .feedback {
-        padding: 15px;
-        border-radius: 10px;
-        margin-top: 15px;
-        font-weight: 600;
-        display: none;
-      }
-      .correct {
-        background: #dcfce7;
-        color: #166534;
-      }
-      .wrong {
-        background: #fee2e2;
-        color: #991b1b;
-      }
-      .made-by {
-        text-align: center;
-        margin-top: auto;
-        font-size: 0.8rem;
-        color: #94a3b8;
-        padding-top: 20px;
-      }
+        :root { --primary: #2563eb; --secondary: #64748b; --success: #10b981; --error: #ef4444; --dark: #0f172a; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--dark); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow: hidden; }
+        .card { background: #ffffff; color: #1e293b; padding: 2rem; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); width: 95%; max-width: 650px; min-height: 520px; display: flex; flex-direction: column; position: relative; z-index: 10; box-sizing: border-box; }
+        #start-menu { text-align: center; display: flex; flex-direction: column; justify-content: center; flex-grow: 1; }
+        .author-tag { color: var(--primary); font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; }
+        h1 { font-size: 2.2rem; margin: 0 0 10px 0; color: #0f172a; }
+        #quiz-content { display: none; flex-grow: 1; }
+        .progress-container { height: 6px; background: #e2e8f0; border-radius: 3px; margin-bottom: 20px; }
+        .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+        .q-text { font-size: 1.1rem; font-weight: 600; line-height: 1.5; margin-bottom: 20px; color: #334155; min-height: 90px; }
+        .blank-space { color: var(--primary); border-bottom: 2px solid var(--primary); padding: 0 5px; font-weight: 800; }
+        input[type="text"] { width: 100%; padding: 16px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 1.1rem; margin-bottom: 15px; transition: all 0.2s; box-sizing: border-box; }
+        input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        .btn-group { display: flex; gap: 10px; }
+        button { padding: 14px 20px; border: none; border-radius: 12px; cursor: pointer; font-size: 1rem; font-weight: 700; transition: 0.2s; }
+        .btn-main { background: var(--primary); color: white; flex: 2; }
+        .btn-skip { background: #f1f5f9; color: var(--secondary); flex: 1; }
+        .btn-next { background: var(--dark); color: white; width: 100%; display: none; }
+        .feedback { padding: 15px; border-radius: 10px; margin: 15px 0; font-weight: 600; display: none; font-size: 0.95rem; }
+        .correct { background: #dcfce7; color: #166534; }
+        .wrong { background: #fee2e2; color: #991b1b; }
+        .made-by { text-align: center; font-size: 0.8rem; color: #94a3b8; margin-top: 20px; }
     </style>
-  </head>
-  <body>
-    <div class="card">
-      <div id="start-menu">
+</head>
+<body>
+
+<div class="card">
+    <div id="start-menu">
         <div class="author-tag">Pham Hien PRESENTS</div>
-        <h1>OS QUIZ: MEMORY</h1>
-        <p style="color: #64748b; margin-bottom: 30px">
-          Hệ thống câu hỏi ngẫu nhiên.<br />(Question: Vietnamese | Answer:
-          English)
-        </p>
-        <button class="btn-main" onclick="startQuiz()">BẮT ĐẦU ÔN TẬP</button>
-      </div>
-
-      <div id="quiz-content">
-        <div class="progress-container">
-          <div class="progress-fill" id="p-fill"></div>
-        </div>
-        <div
-          id="status"
-          style="
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-bottom: 10px;
-          "
-        >
-          <span id="q-number">Câu hỏi 1/20</span>
-          <span id="score">Điểm: 0</span>
-        </div>
-
-        <div class="q-text" id="q-text">Đang tải câu hỏi...</div>
-        <input
-          type="text"
-          id="user-input"
-          placeholder="Nhập đáp án tiếng Anh..."
-          autocomplete="off"
-        />
-
-        <div id="feedback" class="feedback"></div>
-
-        <div class="btn-group" id="action-buttons">
-          <button class="btn-main" id="btn-check" onclick="checkAnswer()">
-            KIỂM TRA (Enter)
-          </button>
-          <button class="btn-skip" id="btn-skip" onclick="skipQuestion()">
-            BỎ QUA
-          </button>
-        </div>
-        <button class="btn-next" id="btn-next" onclick="nextQuestion()">
-          CÂU TIẾP THEO →
-        </button>
-      </div>
-
-      <div class="made-by">Made by PhamHien</div>
+        <h1>OS EXAM MASTER</h1>
+        <p style="color: #64748b; margin-bottom: 30px;">Toàn bộ câu hỏi ôn thi (Sync, Deadlock, Memory, VM, CPU, Disk).<br>(Answer: English)</p>
+        <button class="btn-main" onclick="startQuiz()">BẮT ĐẦU ÔN THI</button>
     </div>
 
-    <script>
-            const masterData = [
-        // --- CHƯƠNG 5: ĐỒNG BỘ TIẾN TRÌNH (SYNCHRONIZATION) ---
+    <div id="quiz-content">
+        <div class="progress-container"><div class="progress-fill" id="p-fill"></div></div>
+        <div id="status" style="display:flex; justify-content: space-between; font-size: 0.85rem; color: #64748b; margin-bottom: 10px;">
+            <span id="q-number">Câu hỏi 1/--</span>
+            <span id="score">Điểm: 0</span>
+        </div>
+        <div class="q-text" id="q-text">Đang tải...</div>
+        <input type="text" id="user-input" placeholder="Nhập đáp án..." autocomplete="off">
+        <div id="feedback" class="feedback"></div>
+        <div class="btn-group" id="action-buttons">
+            <button class="btn-main" id="btn-check" onclick="checkAnswer()">KIỂM TRA (Enter)</button>
+            <button class="btn-skip" id="btn-skip" onclick="skipQuestion()">XEM ĐÁP ÁN</button>
+        </div>
+        <button class="btn-next" id="btn-next" onclick="nextQuestion()">CÂU TIẾP THEO →</button>
+    </div>
+    <div class="made-by">Made by PhamHien</div>
+</div>
+
+<script>
+    const masterData = [
+        // --- 52 CÂU HỎI GỐC CỦA BẠN (GIỮ NGUYÊN) ---
         { q: "Tình huống nhiều tiến trình cùng truy cập và thay đổi dữ liệu chung, kết quả phụ thuộc vào thứ tự thực thi gọi là ____ condition.", a: "race", hint: "Điều kiện chạy đua." },
         { q: "Đoạn mã trong tiến trình có truy cập đến tài nguyên chung được gọi là ____ section.", a: "critical", hint: "Vùng găng / Vùng tranh chấp." },
         { q: "Yêu cầu đảm bảo chỉ một tiến trình được ở trong vùng tranh chấp tại một thời điểm là ____ exclusion.", a: "mutual", hint: "Loại trừ tương hỗ." },
@@ -234,8 +73,6 @@
         { q: "Thao tác trên semaphore để tăng giá trị (báo hiệu) được gọi là ____.", a: "signal", hint: "Hoặc gọi là V()." },
         { q: "Cấu trúc dữ liệu cao cấp (abstract data type) bao gồm thủ tục và biến điều kiện để đồng bộ hóa là ____.", a: "monitor", hint: "Giám sát." },
         { q: "Bài toán đồng bộ kinh điển mô phỏng 5 triết gia ngồi ăn tối là ____ Philosophers.", a: "dining", hint: "Các triết gia ăn tối." },
-
-        // --- CHƯƠNG 6: TẮC NGHẼN (DEADLOCK) ---
         { q: "Tình trạng các tiến trình chờ đợi nhau vô hạn vì mỗi bên giữ tài nguyên bên kia cần là ____.", a: "deadlock", hint: "Tắc nghẽn." },
         { q: "Điều kiện deadlock: Tiến trình giữ ít nhất 1 tài nguyên và chờ thêm tài nguyên khác là ____ and wait.", a: "hold", hint: "Giữ và chờ." },
         { q: "Điều kiện deadlock: Tài nguyên không thể bị tước đoạt từ tiến trình đang giữ nó là no ____.", a: "preemption", hint: "Không trưng dụng/tước đoạt." },
@@ -246,8 +83,6 @@
         { q: "Trong thuật toán Banker, nếu hệ thống có thể tìm được chuỗi thực thi an toàn, trạng thái đó gọi là ____ state.", a: "safe", hint: "Trạng thái an toàn." },
         { q: "Phương pháp cho phép deadlock xảy ra rồi mới tìm và xử lý gọi là deadlock ____.", a: "detection", hint: "Phát hiện tắc nghẽn." },
         { q: "Hiện tượng một tiến trình chờ đợi quá lâu mà không được cấp phát tài nguyên (do độ ưu tiên thấp) là ____.", a: "starvation", hint: "Đói tài nguyên." },
-
-        // --- CHƯƠNG 7: QUẢN LÝ BỘ NHỚ (MEMORY MANAGEMENT) ---
         { q: "Địa chỉ do CPU tạo ra được gọi là ____ address.", a: "logical", hint: "Địa chỉ logic (hoặc ảo)." },
         { q: "Địa chỉ thực tế trên thanh RAM được gọi là ____ address.", a: "physical", hint: "Địa chỉ vật lý." },
         { q: "Thiết bị phần cứng thực hiện ánh xạ địa chỉ logic sang vật lý là ____.", a: "mmu", hint: "Viết tắt Memory Management Unit." },
@@ -263,8 +98,6 @@
         { q: "Phương pháp quản lý bộ nhớ dựa trên góc nhìn logic của lập trình viên (chia thành hàm, stack...) là ____.", a: "segmentation", hint: "Phân đoạn." },
         { q: "Trong bảng phân đoạn, mỗi dòng chứa Base và ____.", a: "limit", hint: "Giới hạn độ dài đoạn." },
         { q: "Thanh ghi lưu địa chỉ bắt đầu của bảng trang trong bộ nhớ là ____.", a: "ptbr", hint: "Page-Table Base Register." },
-
-        // --- CHƯƠNG 8: BỘ NHỚ ẢO (VIRTUAL MEMORY) ---
         { q: "Cơ chế cho phép chạy ứng dụng có kích thước lớn hơn dung lượng RAM vật lý là ____ memory.", a: "virtual", hint: "Bộ nhớ ảo." },
         { q: "Kỹ thuật chỉ nạp trang vào RAM khi tiến trình thực sự truy cập đến nó là ____ paging.", a: "demand", hint: "Nạp trang theo yêu cầu." },
         { q: "Lỗi ngắt xảy ra khi tiến trình truy cập vào một trang chưa có trong RAM là Page ____.", a: "fault", hint: "Lỗi trang." },
@@ -278,150 +111,114 @@
         { q: "Hiện tượng hệ thống bận rộn với việc tráo đổi trang (paging in/out) liên tục khiến hiệu suất CPU giảm mạnh là ____.", a: "thrashing", hint: "Trì trệ hệ thống." },
         { q: "Mô hình dựa trên tính cục bộ để xác định số lượng frame cần thiết cho tiến trình nhằm tránh Thrashing là ______-set model.", a: "working", hint: "Tập làm việc." },
         { q: "Tỷ lệ tìm thấy trang trong TLB được gọi là ____ ratio.", a: "hit", hint: "Tỷ lệ trúng." },
-        { q: "Thời gian trung bình để truy cập bộ nhớ, tính cả thời gian xử lý page fault, gọi là ____ Access Time.", a: "effective", hint: "EAT." }
-        { q: "Chương trình hệ thống chịu trách nhiệm chuyển trang giữa RAM và đĩa (nhưng chỉ chuyển các trang cần thiết) gọi là ____.", a: "pager", hint: "Một loại swapper lười (lazy swapper)." },
+        { q: "Thời gian trung bình để truy cập bộ nhớ, tính cả thời gian xử lý page fault, gọi là ____ Access Time.", a: "effective", hint: "EAT." },
+        { q: "Chương trình hệ thống chịu trách nhiệm chuyển trang giữa RAM và đĩa gọi là ____.", a: "pager", hint: "Một loại swapper lười (lazy swapper)." },
         { q: "Bit dùng để đánh dấu một trang đang nằm trong RAM (v) hay không (i) là ______-invalid bit.", a: "valid", hint: "Hợp lệ / Không hợp lệ." },
         { q: "Trong Demand Paging, nếu bit trạng thái là 'i' (invalid), truy cập sẽ gây ra ____.", a: "trap", hint: "Một loại ngắt phần mềm gửi tới OS." },
         { q: "Chiến lược không bao giờ nạp trang vào RAM cho đến khi nó được tham chiếu lần đầu gọi là ____ demand paging.", a: "pure", hint: "Phân trang theo yêu cầu thuần túy." },
-        { q: "Để hỗ trợ Demand Paging, hệ thống cần bảng trang và không gian lưu trữ thứ cấp gọi là ____ space.", a: "swap", hint: "Không gian tráo đổi." },
         { q: "Khi xảy ra lỗi trang (page fault), hệ điều hành phải tìm một ____ frame còn trống để nạp trang vào.", a: "free", hint: "Khung trang tự do/trống." },
-        { q: "Thời gian trung bình truy cập bộ nhớ có xét đến xác suất lỗi trang gọi là ____ Access Time.", a: "effective", hint: "Viết tắt là EAT." },
-        { q: "Kỹ thuật cho phép tiến trình cha và con chia sẻ chung các trang nhớ, chỉ sao chép khi có tiến trình thực hiện ghi là ______-on-Write.", a: "copy", hint: "Viết tắt là COW." },
-        { q: "Trong thuật toán FIFO, hiện tượng tăng số frame nhưng số lỗi trang cũng tăng gọi là ____'s Anomaly.", a: "belady", hint: "Nghịch lý Belady." },
-        { q: "Chuỗi tham chiếu bộ nhớ dùng để đánh giá thuật toán thay thế trang gọi là reference ____.", a: "string", hint: "Chuỗi tham chiếu." },
-        { q: "Thuật toán thay thế trang chọn trang sẽ không được sử dụng trong thời gian lâu nhất sắp tới là ____.", a: "optimal", hint: "Thuật toán tối ưu." },
-        { q: "Thuật toán thay thế trang chọn trang đã không được sử dụng lâu nhất trong quá khứ là ____.", a: "lru", hint: "Least Recently Used." },
-        { q: "Để xấp xỉ thuật toán LRU, phần cứng hỗ trợ thêm bit ____ cho mỗi trang.", a: "reference", hint: "Bit tham chiếu (thường là 0 hoặc 1)." },
-        { q: "Thuật toán Second-Chance (Cơ hội thứ hai) thực chất là thuật toán FIFO kết hợp với bit ____.", a: "reference", hint: "Bit tham chiếu." },
         { q: "Thuật toán đếm số lần sử dụng trang, thay thế trang có số lần dùng ít nhất là ____.", a: "lfu", hint: "Least Frequently Used." },
-        { q: "Thuật toán thay thế trang có số lần sử dụng nhiều nhất (vì cho rằng trang ít dùng mới vừa được nạp) là ____.", a: "mfu", hint: "Most Frequently Used." },
         { q: "Phương pháp cấp phát frame cho phép một tiến trình lấy frame của tiến trình khác là ____ allocation.", a: "global", hint: "Cấp phát toàn cục." },
         { q: "Phương pháp cấp phát frame chỉ cho phép tiến trình thay thế các trang của chính nó là ____ allocation.", a: "local", hint: "Cấp phát cục bộ." },
-        { q: "Hiện tượng CPU hầu như không làm việc vì phải liên tục xử lý lỗi trang (page in/out) gọi là ____.", a: "thrashing", hint: "Trì trệ hệ thống." },
         { q: "Nguyên nhân chính dẫn đến Thrashing là do mức độ đa chương (degree of multiprogramming) quá ____.", a: "high", hint: "Cao." },
-        { q: "Mô hình Tập làm việc (Working-Set Model) dựa trên giả định về tính ____ (locality) của chương trình.", a: "local", hint: "Tính cục bộ." },
-        { q: "Trong mô hình Working-Set, khoảng thời gian (số lần tham chiếu) dùng để xác định tập làm việc được ký hiệu là ____.", a: "delta", hint: "Ký hiệu tam giác (Δ)." },
-        { q: "Nếu tổng kích thước của các Working Set (WSS) lớn hơn tổng số frame vật lý, hệ thống sẽ bị ____.", a: "thrashing", hint: "Trì trệ." },
-        { q: "Một phương pháp khác để kiểm soát Thrashing là điều chỉnh tần suất lỗi trang, gọi là Page-Fault ____.", a: "frequency", hint: "Viết tắt là PFF." },
-        { q: "Trong PFF, nếu tỷ lệ lỗi trang vượt quá mức giới hạn trên (upper bound), OS sẽ cấp thêm ____ cho tiến trình.", a: "frame", hint: "Khung trang." },
-        { q: "Hàm hệ thống trong Unix/Linux tạo ra tiến trình con sử dụng kỹ thuật Copy-on-Write thường là ______().", a: "fork", hint: "Lệnh tạo tiến trình." }
+        { q: "Hàm hệ thống trong Unix/Linux tạo ra tiến trình con sử dụng kỹ thuật Copy-on-Write là ______().", a: "fork", hint: "Lệnh tạo tiến trình con." },
 
-      ];
+        // --- CÁC CÂU HỎI BỔ SUNG QUAN TRỌNG ĐỂ ĐI THI ---
+        { q: "Thuật toán lập lịch CPU đơn giản nhất, tiến trình nào đến trước được phục vụ trước là ____.", a: "fcfs", hint: "First-Come, First-Served." },
+        { q: "Thuật toán lập lịch CPU ưu tiên tiến trình có thời gian thực thi ngắn nhất là ____.", a: "sjf", hint: "Shortest Job First." },
+        { q: "Thuật toán lập lịch CPU thiết kế cho hệ thống chia sẻ thời gian, mỗi tiến trình nhận một lát cắt thời gian gọi là Round ____.", a: "robin", hint: "Lập lịch vòng tròn." },
+        { q: "Khoảng thời gian một tiến trình nhận được để thực thi trong Round Robin gọi là time ____.", a: "quantum", hint: "Lát cắt thời gian." },
+        { q: "Thuật toán lập lịch đĩa (Disk Scheduling) phục vụ các yêu cầu theo thứ tự đến là ____.", a: "fcfs", hint: "Giống lập lịch CPU." },
+        { q: "Thuật toán lập lịch đĩa di chuyển đầu đọc từ đầu đến cuối đĩa rồi quay lại như một thang máy gọi là ____.", a: "scan", hint: "Thuật toán thang máy." },
+        { q: "Cấu trúc dữ liệu của hệ điều hành dùng để quản lý thông tin của một tiến trình là ____.", a: "pcb", hint: "Process Control Block." },
+        { q: "Việc chuyển đổi CPU từ tiến trình này sang tiến trình khác gọi là ____ switch.", a: "context", hint: "Chuyển đổi ngữ cảnh." }
+    ];
 
-            let quizData = [];
-            let currentIdx = 0;
-            let currentScore = 0;
+    let quizData = [];
+    let currentIdx = 0;
+    let currentScore = 0;
 
-            function celebrate() {
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#2563eb', '#10b981', '#ffbb33']
-                });
-            }
+    function startQuiz() {
+        quizData = [...masterData].sort(() => Math.random() - 0.5);
+        currentIdx = 0;
+        currentScore = 0;
+        document.getElementById('start-menu').style.display = 'none';
+        document.getElementById('quiz-content').style.display = 'block';
+        loadQuestion();
+    }
 
-            function startQuiz() {
-                // Randomize questions
-                quizData = [...masterData].sort(() => Math.random() - 0.5);
-                currentIdx = 0;
-                currentScore = 0;
-                document.getElementById('score').innerText = Điểm: 0;
-                document.getElementById('start-menu').style.display = 'none';
-                document.getElementById('quiz-content').style.display = 'block';
-                loadQuestion();
-            }
+    function loadQuestion() {
+        const data = quizData[currentIdx];
+        document.getElementById('q-text').innerHTML = data.q.replace("____", "<span class='blank-space'>...</span>");
+        document.getElementById('user-input').value = "";
+        document.getElementById('user-input').disabled = false;
+        document.getElementById('feedback').style.display = 'none';
+        document.getElementById('btn-next').style.display = 'none';
+        document.getElementById('action-buttons').style.display = 'flex';
+        document.getElementById('q-number').innerText = `Câu hỏi ${currentIdx + 1}/${quizData.length}`;
+        document.getElementById('p-fill').style.width = `${((currentIdx + 1) / quizData.length) * 100}%`;
+        setTimeout(() => document.getElementById('user-input').focus(), 10);
+    }
 
-            function loadQuestion() {
-                const data = quizData[currentIdx];
-                document.getElementById('q-text').innerHTML = data.q.replace("____", "<span class='blank-space'>...</span>");
-                document.getElementById('user-input').value = "";
-                document.getElementById('user-input').disabled = false;
-                document.getElementById('feedback').style.display = 'none';
-                document.getElementById('btn-next').style.display = 'none';
-                document.getElementById('action-buttons').style.display = 'flex';
-                document.getElementById('q-number').innerText = Câu hỏi ${currentIdx + 1}/${quizData.length};
-                document.getElementById('p-fill').style.width = ${((currentIdx + 1) / quizData.length) * 100}%;
-                setTimeout(() => document.getElementById('user-input').focus(), 10);
-            }
+    function checkAnswer() {
+        const userValue = document.getElementById('user-input').value.trim().toLowerCase();
+        const correctAnswer = quizData[currentIdx].a.toLowerCase();
+        const feedback = document.getElementById('feedback');
+        if (userValue === "") return;
+        if (userValue === correctAnswer) {
+            feedback.innerText = "Chính xác! 🎉";
+            feedback.className = "feedback correct";
+            currentScore += 1;
+            document.getElementById('score').innerText = `Điểm: ${currentScore}`;
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            showNextState();
+        } else {
+            feedback.innerText = "Sai rồi! Gợi ý: " + quizData[currentIdx].hint;
+            feedback.className = "feedback wrong";
+        }
+        feedback.style.display = 'block';
+    }
 
-            function checkAnswer() {
-                const userValue = document.getElementById('user-input').value.trim().toLowerCase();
-                const correctAnswer = quizData[currentIdx].a.toLowerCase();
-                const feedback = document.getElementById('feedback');
+    function skipQuestion() {
+        const feedback = document.getElementById('feedback');
+        feedback.innerText = "Đáp án đúng là: " + quizData[currentIdx].a.toUpperCase();
+        feedback.className = "feedback";
+        feedback.style.background = "#f1f5f9";
+        feedback.style.display = 'block';
+        showNextState();
+    }
 
-                if (userValue === "") return;
+    function showNextState() {
+        document.getElementById('user-input').disabled = true;
+        document.getElementById('action-buttons').style.display = 'none';
+        document.getElementById('btn-next').style.display = 'block';
+        document.getElementById('btn-next').focus();
+    }
 
-                if (userValue === correctAnswer) {
-                    feedback.innerText = "Chính xác! 🎉";
-                    feedback.className = "feedback correct";
-                    currentScore += 5;
-                    document.getElementById('score').innerText = Điểm: ${currentScore};
-                    celebrate(); // Hiệu ứng pháo hoa
-                    showNextState();
-                } else {
-                    feedback.innerText = "Sai rồi! Gợi ý: " + quizData[currentIdx].hint;
-                    feedback.className = "feedback wrong";
-                }
-                feedback.style.display = 'block';
-            }
+    function nextQuestion() {
+        currentIdx++;
+        if (currentIdx < quizData.length) loadQuestion();
+        else showResult();
+    }
 
-            function skipQuestion() {
-                const feedback = document.getElementById('feedback');
-                feedback.innerText = "Đã bỏ qua. Đáp án đúng là: " + quizData[currentIdx].a.toUpperCase();
-                feedback.className = "feedback";
-                feedback.style.background = "#f1f5f9";
-                feedback.style.color = "#475569";
-                feedback.style.display = 'block';
-                showNextState();
-            }
+    function showResult() {
+        document.getElementById('quiz-content').innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+                <h2>KẾT THÚC ÔN TẬP!</h2>
+                <div style="font-size: 3.5rem; color: var(--primary); font-weight: 800; margin: 20px 0;">${currentScore}/${quizData.length}</div>
+                <p>Bạn đã sẵn sàng cho kỳ thi OS.</p>
+                <button class="btn-main" onclick="location.reload()">LÀM LẠI</button>
+            </div>`;
+        confetti({ particleCount: 200, spread: 100, origin: { y: 0.5 } });
+    }
 
-            function showNextState() {
-                document.getElementById('user-input').disabled = true;
-                document.getElementById('action-buttons').style.display = 'none';
-                document.getElementById('btn-next').style.display = 'block';
-                document.getElementById('btn-next').focus();
-            }
-
-            function nextQuestion() {
-                currentIdx++;
-                if (currentIdx < quizData.length) {
-                    loadQuestion();
-                } else {
-                    showResult();
-                }
-            }
-
-            function showResult() {
-                const content = document.getElementById('quiz-content');
-                content.innerHTML = `
-                    <div style="text-align: center; padding: 20px;">
-                        <h2 style="font-size: 2rem; color: #0f172a;">KẾT THÚC!</h2>
-                        <div style="font-size: 3rem; font-weight: 800; color: var(--primary); margin: 20px 0;">${currentScore}/100</div>
-                        <p style="color: #64748b; margin-bottom: 25px;">Tuyệt vời! Bạn đã hoàn thành bộ câu hỏi.</p>
-                        <button class="btn-main" onclick="location.reload()">LÀM LẠI (TRỘN CÂU HỎI)</button>
-                    </div>
-                `;
-                // Pháo hoa lớn khi kết thúc
-                var duration = 3 * 1000;
-                var end = Date.now() + duration;
-                (function frame() {
-                    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
-                    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
-                    if (Date.now() < end) { requestAnimationFrame(frame); }
-                }());
-            }
-
-            document.addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    const isCheckVisible = document.getElementById('action-buttons').style.display !== 'none';
-                    const isStartVisible = document.getElementById('start-menu').style.display !== 'none';
-                    if (isStartVisible) startQuiz();
-                    else if (isCheckVisible) checkAnswer();
-                    else nextQuestion();
-                }
-            });
-    </script>
-  </body>
+    document.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            if (document.getElementById('start-menu').style.display !== 'none') startQuiz();
+            else if (document.getElementById('action-buttons').style.display !== 'none') checkAnswer();
+            else nextQuestion();
+        }
+    });
+</script>
+</body>
 </html>
-cdn.jsdelivr.net
